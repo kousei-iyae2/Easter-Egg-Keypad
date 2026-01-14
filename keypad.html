@@ -2,69 +2,135 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Keypad Access</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Secure Terminal</title>
     <style>
-        /* Simple, neutral styling */
+        /* FUTURISTIC DARK THEME */
+        :root {
+            --bg-color: #0a0a0a;
+            --panel-color: #141414;
+            --text-color: #e0e0e0;
+            --accent-color: #00ffc3; /* Cyber Teal */
+            --error-color: #ff3333;
+            --btn-color: #1f1f1f;
+            --btn-hover: #2a2a2a;
+        }
+
         body {
-            background-color: #f4f4f4;
-            color: #333;
-            font-family: sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Courier New', monospace; /* Monospace for tech feel */
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
+            overflow: hidden; /* Prevent scrolling on mobile */
         }
+
         .container {
             text-align: center;
-            background: #ffffff;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            width: 280px;
+            background: var(--panel-color);
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 255, 195, 0.05); /* Slight glow */
+            border: 1px solid #333;
+            width: 90%;
+            max-width: 320px; /* Perfect width for phones */
         }
-        .display {
-            background: #eeeeee;
-            padding: 15px;
-            font-size: 28px;
-            letter-spacing: 8px;
+
+        h2 {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #666;
+            margin-top: 0;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
             margin-bottom: 20px;
-            border-radius: 6px;
-            min-height: 35px;
-            font-family: monospace;
         }
+
+        /* THE SCREEN */
+        .display {
+            background: #000;
+            padding: 15px;
+            font-size: 32px;
+            letter-spacing: 10px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+            min-height: 40px;
+            color: var(--accent-color);
+            border: 1px solid #333;
+            text-shadow: 0 0 5px var(--accent-color);
+        }
+
+        /* KEYPAD GRID */
         .grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 12px;
         }
+
         button {
-            padding: 15px;
-            font-size: 20px;
-            background: #e0e0e0;
-            border: 1px solid #ccc;
-            color: #333;
+            padding: 18px 0; /* Taller touch targets for thumbs */
+            font-size: 22px;
+            background: var(--btn-color);
+            border: 1px solid #333;
+            color: var(--text-color);
             border-radius: 8px;
             cursor: pointer;
-            transition: background 0.2s;
+            font-family: 'Courier New', monospace;
+            transition: all 0.1s;
+            -webkit-tap-highlight-color: transparent; /* Remove mobile highlight tap */
         }
-        button:hover { background: #d0d0d0; }
-        button:active { background: #bbb; }
-        .clear { background: #ff6b6b; color: white; border: none; }
-        .clear:hover { background: #ee5253; }
-        
+
+        button:active {
+            background: var(--accent-color);
+            color: #000;
+            transform: scale(0.95);
+        }
+
+        .clear {
+            color: var(--error-color);
+            border-color: #4a1a1a;
+        }
+
+        /* SUCCESS SCREEN */
         .success-box {
             display: none;
             text-align: center;
+            animation: fadeIn 0.5s;
         }
-        .success-box h1 { color: #2ecc71; }
+
+        .success-box h1 {
+            color: var(--accent-color);
+            font-size: 24px;
+            margin-bottom: 20px;
+            border: 1px solid var(--accent-color);
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        .instruction {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #ccc;
+            background: #1a1a1a;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 3px solid var(--accent-color);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
 
 <div class="container" id="keypad-ui">
-    <h2 id="title">Keypad #1</h2>
+    <h2 id="title">TERMINAL 01</h2>
     <div class="display" id="screen">____</div>
     <div class="grid">
         <button onclick="press(1)">1</button>
@@ -82,32 +148,45 @@
 </div>
 
 <div class="container success-box" id="success-ui">
-    <h1>🔓 UNLOCKED</h1>
-    <p id="achievement-text"></p>
-    <img id="success-img" src="" style="max-width:100%; border-radius:8px; margin-top:10px;">
+    <h1>ACCESS GRANTED</h1>
+    <div class="instruction">
+        Screenshot your success and tag the event host in the <strong>Heiwa Oukoku Main Chat</strong> to claim your points!
+    </div>
+    <p style="margin-top:20px; color:#555; font-size:12px;">Terminal <span id="success-id"></span> Verified.</p>
 </div>
 
 <script>
-    // 1. YOUR DATA CONFIGURATION
-    const config = {
-        "1": { code: "1234", msg: "Achievement #1: The Beginning", img: "https://via.placeholder.com/150?text=1" },
-        "2": { code: "5588", msg: "Achievement #2: Secret Finder", img: "https://via.placeholder.com/150?text=2" },
-        "3": { code: "0000", msg: "Achievement #3: Blank Space", img: "https://via.placeholder.com/150?text=3" },
-        "4": { code: "1111", msg: "Achievement #4: One for All", img: "https://via.placeholder.com/150?text=4" },
-        "5": { code: "2222", msg: "Achievement #5: Double Vision", img: "https://via.placeholder.com/150?text=5" },
-        "6": { code: "3333", msg: "Achievement #6: Triple Threat", img: "https://via.placeholder.com/150?text=6" },
-        "7": { code: "4444", msg: "Achievement #7: High Stakes", img: "https://via.placeholder.com/150?text=7" },
-        "8": { code: "8080", msg: "Achievement #8: The Port", img: "https://via.placeholder.com/150?text=8" },
-        "9": { code: "9090", msg: "Achievement #9: Almost There", img: "https://via.placeholder.com/150?text=9" },
-        "10": { code: "9999", msg: "FINAL Achievement: Completionist!", img: "https://via.placeholder.com/150?text=10" }
+    // ---------------------------------------------
+    // DATABASE: 50 Codes.
+    // EDIT THESE CODES TO WHATEVER YOU WANT.
+    // ---------------------------------------------
+    const codeDatabase = {
+        "1": "1234", "2": "2288", "3": "9090", "4": "1111", "5": "5555",
+        "6": "1029", "7": "3847", "8": "1928", "9": "8473", "10": "7777",
+        "11": "2024", "12": "3030", "13": "4545", "14": "6767", "15": "8989",
+        "16": "1357", "17": "2468", "18": "9876", "19": "5432", "20": "0000",
+        "21": "1212", "22": "3434", "23": "5656", "24": "7878", "25": "9012",
+        "26": "4321", "27": "8765", "28": "1122", "29": "3344", "30": "5566",
+        "31": "7788", "32": "9900", "33": "1472", "34": "2583", "35": "3691",
+        "36": "7412", "37": "8523", "38": "9634", "39": "1597", "40": "7531",
+        "41": "2244", "42": "6688", "43": "1313", "44": "7979", "45": "2828",
+        "46": "4646", "47": "8282", "48": "9191", "49": "3737", "50": "9999"
     };
 
-    // 2. LOGIC TO READ THE URL (?id=1)
+    // ---------------------------------------------
+    // SYSTEM LOGIC (DO NOT TOUCH)
+    // ---------------------------------------------
+
+    // Get ID from URL (e.g., ?id=15)
     const urlParams = new URLSearchParams(window.location.search);
     const keypadId = urlParams.get('id') || "1";
-    const currentConfig = config[keypadId] || config["1"];
 
-    document.getElementById('title').innerText = "Keypad #" + keypadId;
+    // Get the correct code for this ID
+    // If ID doesn't exist (e.g. 51), default to keypad 1's code
+    const correctCode = codeDatabase[keypadId] || codeDatabase["1"];
+
+    // Update Title
+    document.getElementById('title').innerText = "TERMINAL " + keypadId.padStart(2, '0');
 
     let input = "";
 
@@ -116,12 +195,16 @@
             input += num;
             updateDisplay();
         }
+
+        // Auto-check when 4 digits are entered
         if (input.length === 4) {
-            checkCode();
+            // Small delay to let the user see the 4th number
+            setTimeout(checkCode, 200);
         }
     }
 
     function updateDisplay() {
+        // Futuristic flashing cursor effect
         document.getElementById('screen').innerText = input.padEnd(4, "_");
     }
 
@@ -131,14 +214,24 @@
     }
 
     function checkCode() {
-        if (input === currentConfig.code) {
+        if (input === correctCode) {
+            // Success
             document.getElementById('keypad-ui').style.display = 'none';
             document.getElementById('success-ui').style.display = 'block';
-            document.getElementById('achievement-text').innerText = currentConfig.msg;
-            document.getElementById('success-img').src = currentConfig.img;
+            document.getElementById('success-id').innerText = keypadId;
         } else {
-            alert("INCORRECT CODE");
-            clearScreen();
+            // Fail Visual
+            const display = document.getElementById('screen');
+            display.style.color = "#ff3333";
+            display.style.borderColor = "#ff3333";
+            display.innerText = "DENIED";
+
+            setTimeout(() => {
+                input = "";
+                display.style.color = "#00ffc3"; // Reset to teal
+                display.style.borderColor = "#333";
+                updateDisplay();
+            }, 800);
         }
     }
 </script>

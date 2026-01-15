@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HO Meijin | Event Briefing</title>
+    <style>
+        :root {
+            --bg-color: #0a0a0a;
+            --panel-color: #141414;
+            --text-color: #e0e0e0;
+            --accent-color: #00ffc3;
+            --error-color: #ff3333;
+            --border-color: #333;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Courier New', monospace;
+            line-height: 1.6;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .main-container {
+            max-width: 800px;
+            background: var(--panel-color);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 0 30px rgba(0, 255, 195, 0.05);
+        }
+
+        .header {
+            text-align: center;
+            border-bottom: 2px solid var(--accent-color);
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin: 0;
+            font-size: 28px;
+        }
+
+        .sub-header {
+            color: #666;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        /* Banner Styling with Flicker Effect */
+        .banner-frame {
+            position: relative;
+            width: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            margin-bottom: 30px;
+            line-height: 0;
+        }
+
+        .banner-img {
+            width: 100%;
+            height: auto;
+            filter: brightness(0.9) contrast(1.1);
+            animation: flicker 4s infinite;
+        }
+
+        /* Scanline Overlay */
+        .banner-frame::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%),
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.02), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.02));
+            background-size: 100% 3px, 3px 100%;
+            pointer-events: none;
+        }
+
+        @keyframes flicker {
+            0% { opacity: 0.97; }
+            5% { opacity: 0.92; }
+            10% { opacity: 0.98; }
+            15% { opacity: 0.94; }
+            20% { opacity: 0.99; }
+            100% { opacity: 1; }
+        }
+
+        h2 {
+            color: var(--accent-color);
+            font-size: 18px;
+            border-left: 4px solid var(--accent-color);
+            padding-left: 15px;
+            margin-top: 40px;
+            text-transform: uppercase;
+        }
+
+        .content-box {
+            background: #0f0f0f;
+            border: 1px solid #222;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .score-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .score-table th, .score-table td {
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            text-align: left;
+        }
+
+        .score-table th {
+            color: var(--accent-color);
+            background: #1a1a1a;
+        }
+
+        .highlight {
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        .warning-box {
+            border: 1px solid var(--error-color);
+            background: rgba(255, 51, 51, 0.05);
+            padding: 20px;
+            color: var(--error-color);
+            text-align: center;
+            font-weight: bold;
+            margin-top: 40px;
+            text-transform: uppercase;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        ul li::before {
+            content: "> ";
+            color: var(--accent-color);
+        }
+
+        .egg-link {
+            text-decoration: none;
+            color: inherit;
+            cursor: default;
+        }
+
+        @media (max-width: 600px) {
+            .main-container { padding: 20px; }
+            h1 { font-size: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <div class="header">
+            <h1>Heiwa Oukoku Meijin</h1>
+            <div class="sub-header">PASSIVE EVENT: EASTER EGG HUNT & TERMINAL BREACH</div>
+        </div>
+
+        <div class="banner-frame">
+            <img src="banner.png" alt="Event Briefing" class="banner-img">
+        </div>
+
+        <p>Welcome, Agent. If the main brain-work of the Meijin event is proving too taxing, this sub-event offers a more tactical objective. Your goal is to navigate the shadows of our domain, locate hidden terminals, and bypass their security.</p>
+
+        <h2>The Mission</h2>
+        <p>Search for hidden terminals. These are accessed via <span class="highlight">Easter Eggs</span>—disguised links hidden within the Heiwa Oukoku Blogger site. They may be hidden behind punctuation marks, images, Disqus threads, or even blank spaces.</p>
+
+        <div class="content-box">
+            In fact, a terminal link is hidden on this very page! Can you find it<a href="https://kousei-iyae2.github.io/Easter-Egg-Keypad/keypad.html?id=12" target="_blank" rel="noopener noreferrer" class="egg-link">?</a>
+        </div>
+
+        <h2>How to Report</h2>
+        <p>Once you find and breach a terminal, tag the host <span class="highlight">Miku</span> in the Main Chat with:</p>
+        <ul>
+            <li>A screenshot and description of the link's location.</li>
+            <li>A screenshot of the "Access Granted" terminal screen.</li>
+        </ul>
+
+        <h2>Scoring Matrix</h2>
+        <table class="score-table">
+            <thead>
+                <tr>
+                    <th>Action</th>
+                    <th>First Finder/Solver</th>
+                    <th>Subsequent Players</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Easter Egg Discovery</td>
+                    <td>50 Points</td>
+                    <td>25 Points</td>
+                </tr>
+                <tr>
+                    <td>Terminal Breach (Solved)</td>
+                    <td>100 Points</td>
+                    <td>50 Points</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Terminal Protocol</h2>
+        <p>Each terminal is protected by high-level encryption:</p>
+        <ul>
+            <li>Requires a 4-digit combination.</li>
+            <li>Limited to 10 attempts before a <span class="highlight">1-hour lockout</span>.</li>
+            <li>The terminal features a <span class="highlight">Glow-Hint System</span>: correct digits in the sequence will cause the keys to light up.</li>
+        </ul>
+
+        <div class="warning-box">
+            Dishonesty or exploitation will result in an immediate permanent ban from this event.
+        </div>
+
+        <p style="text-align: center; margin-top: 30px; color: #555;">Happy Hunting. Stay Vigilant.</p>
+    </div>
+
+    <script>
+    (function() {
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.addEventListener('keydown', e => {
+            if (e.keyCode === 123 || (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) || (e.ctrlKey && e.keyCode === 85)) {
+                e.preventDefault();
+            }
+        });
+        setInterval(() => { (function() { debugger; })(); }, 100);
+    })();
+    </script>
+</body>
+</html>

@@ -229,6 +229,35 @@
             letter-spacing: 1px;
         }
 
+        /* --- New Button Style --- */
+        .btn-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .full-leaderboard-btn {
+            display: inline-block;
+            background: transparent;
+            color: var(--accent-color);
+            border: 1px solid var(--accent-color);
+            padding: 12px 24px;
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 14px;
+            border-radius: 5px;
+            transition: 0.3s all ease;
+            box-shadow: 0 0 10px rgba(0, 255, 195, 0.1);
+        }
+
+        .full-leaderboard-btn:hover {
+            background: var(--accent-color);
+            color: #000;
+            box-shadow: 0 0 20px rgba(0, 255, 195, 0.4);
+            transform: translateY(-2px);
+        }
+
         @media (max-width: 600px) {
             .main-container { padding: 20px; }
             h1 { font-size: 20px; }
@@ -316,9 +345,16 @@
                 <div class="profile-frame">
                     <img src="profile2.png" alt="User PFP" class="profile-pic">
                 </div>
-                <div class="username-placeholder">???</div>
+                <div class="username-placeholder">Username Here</div>
             </div>
         </div>
+
+        <div class="btn-container">
+            <a href="https://docs.google.com/spreadsheets/d/1I9ksCUWt92UMcQQbQptz8sjjwKOPXZvM1sP1-_ruLWA/edit?usp=sharing" target="_blank" class="full-leaderboard-btn">
+                📊 View Full Leaderboard
+            </a>
+        </div>
+
         <p style="text-align: center; margin-top: 40px; color: #555;">Happy Hunting. Stay Vigilant.</p>
     </div>
 
